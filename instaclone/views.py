@@ -15,9 +15,10 @@ def home(request):
     return render(request, 'all-images/home.html', {"images":images})
 
 def search_results(request): 
-      
-    if 'image' in request.GET and request.GET["image"]:
-        search_term =request.GET.get("image")
+
+    #query all username to find search_term  
+    if 'username' in request.GET and request.GET["username"]:
+        search_term =request.GET.get("username")
         search_images = Image.search_image(search_term)
         message = f"{search_term}"
 
