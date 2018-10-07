@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Image,Profile
+from . models import Image,Profile
 # from friendship.models import Friend, Follow
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 
@@ -10,9 +10,18 @@ from django.http import HttpResponse, Http404,HttpResponseRedirect
 
 def home(request):
     #query all images by id
-    images =  Image.objects.all()
+    images = Image.objects.all()
+    
 
-    return render(request, 'all-images/home.html', {"images":images})
+    return render(request, 'home.html', {"images":images,})
+
+def profile(request):
+    profile = Profile.objects.all()
+
+    return render(request, 'profile.html', {"profile":profile})
+
+    
+
 
 def search_results(request): 
 
