@@ -12,5 +12,5 @@ urlpatterns =[
     # url(r'^new/article$', views.new_article, name='new-article') 
 ]
 
-if settings.DEBUG:
-    urlpatterns+=static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     uroot = settings.MEDIA_ROOT)lpatterns+=static(settings.MEDIA_URL,document_r
