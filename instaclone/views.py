@@ -1,17 +1,18 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from .models import Image,Profile
 # from friendship.models import Friend, Follow
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 
 
 # Create your views here.
 
-def home(request, id):
+def home(request):
     #query all images by id
-    images =  Image.get_image_by_id(id=id).all()
+    images =  Image.objects.all()
 
-    return render(request, 'home.html', {"images":images})
+    return render(request, 'all-images/home.html', {"images":images})
 
 def search_results(request): 
       
