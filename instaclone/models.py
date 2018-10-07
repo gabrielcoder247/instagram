@@ -32,6 +32,7 @@ class Image(models.Model):
     name = models.CharField(max_length=30)
     caption = models.CharField(max_length=30)
     comments = models.CharField(max_length=500)
+    pub_date = models.DateField(auto_now_add=True)
     image = models.ImageField(upload_to = 'images/', blank = True)
     profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
 

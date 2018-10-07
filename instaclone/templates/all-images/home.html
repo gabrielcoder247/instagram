@@ -1,0 +1,55 @@
+{% extends 'all-images/base.html'%}
+
+{% block content %}
+
+{{block.super}}
+
+
+
+<div class "container-fluid">
+        <div class="row">
+    <!-- looping through news -->
+    {% for image in images %}
+        <!-- display images of user -->
+        <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div class = "image-container">
+                <a class="thumbnail" data-image-id="{{image.id}}" data-toggle="modal" data-title="{{image.name}}" data-caption="{{image.caption}}" data-image="{{image.image.url}}" data-target="#{{image.id}}">
+                    <img src="{{image.image.url}}" alt="{{image.caption}}" id="img{{image.id}}" class="img-thumbnail" alt="Image" style="width:100%; height:300px">
+                </a>
+    <!-- Displays modal nested in cards -->
+    <div class="modal fade reponsive" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:100px!important">
+          <div class="modal-content">
+              <div class="card" style="width:400px; height:530px">
+                  <img src="{{image.image.url}}" class="card-img-top" alt="Card image" style="width:100%;height:350px">
+                  <div class="card-body">
+                      <h4 class="card-title">
+                        <small> Title: {{image.name}}</small></h4>
+                        <p> Description: {{image.caption}}</p>
+        
+                  <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button> 
+                        <br>
+                        <small><p class="image-footer text-center" >Taken by {{image.name}} since {{image.pub_date|timesince}} ago </p></small>           
+                  </div>
+                       
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+{% empty %}
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h2 class="text-center">No images yet!</h2>
+</div>
+   
+{% endfor %}
+
+</div> 
+</div>
+
+{% endblock %}
+
