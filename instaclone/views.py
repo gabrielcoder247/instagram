@@ -14,7 +14,7 @@ def home(request):
     
 
     return render(request, 'home.html', {"images":images,})
-
+@login_required(login_url='/accounts/login/')
 def profile(request):
     profile = Profile.objects.all()
 
@@ -22,7 +22,7 @@ def profile(request):
 
     
 
-
+@login_required(login_url='/accounts/login/')
 def search_results(request): 
 
     #query all username to find search_term  

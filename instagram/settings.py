@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'instaclone',
     'bootstrap4',
+    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
