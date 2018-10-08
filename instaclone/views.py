@@ -77,3 +77,9 @@ def follow_function(request,other_user):
 	other_users=User.objects.get(id=other_user)
 	addfollow=Follow.objects.add_follower(request.user, other_users)
 	return redirect('home')    
+
+@login_required(login_url='/accounts/login')
+def unfollow_function(request,other_user):
+	other_users=User.objects.get(id=other_user)
+	unfollow=Follow.objects.remove_follower(request.user, other_users)
+	return redirect('welcome')
