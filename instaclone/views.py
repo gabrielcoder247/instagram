@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from . models import Image,Profile
 from .email import send_welcome_email
 from .forms import NewProfileForm,NewImageForm
-# from friendship.models import Friend, Follow
+from friendship.models import Friend, Follow
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 
 
@@ -70,3 +70,10 @@ def new_image(request):
 	else:
 			form = NewImageForm()
 	return render(request, 'new_image.html',{"form":form })
+
+
+@login_required(login_url='/accounts/login')
+def follow_function(request,other_user):
+	other_users=User.objects.get(id=other_user)
+	addfollow=Follow.objects.add_follower(request.user, other_users)
+	return redirect('home')    
