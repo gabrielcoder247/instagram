@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from . models import Image,Profile
 from .email import send_welcome_email
-from .form import NewProfileForm,NewImageForm
+from .forms import NewProfileForm,NewImageForm
 # from friendship.models import Friend, Follow
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 
