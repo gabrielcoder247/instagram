@@ -6,19 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <nav class="navbar navbar-inverse">
+  <nav class="navbar navbar-inverse navbar-light bg-light ">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="{% url 'home_page' %}">Instagram</a>
       </div>
 
       <!-- Adding a search form  -->
-      <div class="col-sm-4 col-md-4 navbar-right">
+      <div class="col-sm-4 col-md-4 navbar-right ">
 
         <form class="navbar-form" role="search" action="{% url 'search_results' %}">
 
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search Article" name="username">
+            <input type="text" class="form-control mr-sm-3" placeholder="Search Article" name="username">
             <div class="input-group-btn">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="search"></i>Search</button>
             </div>
@@ -55,7 +55,10 @@
   <li>
     <a class='btn btn-default' href="/accounts/login">Login</a>
   </li>
+  
   {% endif %}
 </div>
+
     </div>
+    
   </nav>

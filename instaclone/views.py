@@ -15,12 +15,14 @@ def home(request):
     images = Image.objects.all()
     user = User.objects.all()
     
-
     return render(request, 'home.html', {"images":images,"user":user})
+
 @login_required(login_url='/accounts/login/')
 def profile(request):
     profile = Profile.objects.all()
     user = User.objects.all()
+    followers=len(Follow.objects.followers(request.user))
+    following=len(Follow.objects.following(request.user))
 
     return render(request, 'profile.html', {"profile":profile,"user":user})
 
@@ -82,4 +84,17 @@ def follow_function(request,other_user):
 def unfollow_function(request,other_user):
 	other_users=User.objects.get(id=other_user)
 	unfollow=Follow.objects.remove_follower(request.user, other_users)
-	return redirect('welcome')
+	return redirect('home')
+
+
+@login_required(login_url='/accounts/login')
+def otherprofile(request,others_user):
+	followers=len(Follow.objects.followers(request.user))
+	other_users=User.objects.get(id=others_user)
+	following=len(Follow.objects.following(request.user))
+	image_count=len(Image.objects.filter(user_id=other_users))
+	images=Image.objects.filter(user_id=other_users)
+	return render(request,'profile_other.html',{"followers":followers,"other_users":other_users,
+	"following":following,"image_count":image_count,"images":images}
+
+
