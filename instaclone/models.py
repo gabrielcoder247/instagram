@@ -72,7 +72,7 @@ class Image(models.Model):
         return self.name
 
 
-class Comment(models.Model):
+class Comments(models.Model):
     user = models.ForeignKey(User,null=True)
     post=models.ForeignKey(Image,related_name='comments',null=True)
     comment=models.CharField(max_length=200,null=True)
