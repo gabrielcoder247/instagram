@@ -1,57 +1,71 @@
 {% extends 'all-images/base.html'%}
+<!-- {% load friendshiptags %} -->
+{% load staticfiles %}
+{% load bootstrap4 %}
 
 {% block content %}
 
 {{block.super}}
 
+<div class='container'>
 
-
-<div class "container-fluid">
-        <div class="row">
-                {% if images %} {% if image.images %}
-    <!-- looping through news -->
-    {% for image in images %}
-        <!-- display News articles -->
-        <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3">
-            <div class = "image-container">
-                <a class="thumbnail" data-image-id="{{image.id}}" data-toggle="modal" data-title="{{image.name}}" data-caption="{{image.caption}}" data-image="{{image.image_path.url}}" data-target="#{{image.id}}">
-                    <img src="{{image.profile.image_path.url}}" alt="{{image.caption}}" id="img{{image.id}}" class="img-thumbnail" alt="Image" style="width:100%; height:300px">
-                </a>
-    <!-- Displays modal nested in cards -->
-    <div class="modal fade reponsive" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:100px!important">
-          <div class="modal-content">
-              <div class="card" style="width:400px; height:530px">
-                  <img src="{{image.image_path.url}}" class="card-img-top" alt="Card image" style="width:100%;height:350px">
-                  <div class="card-body">
-                      <h4 class="card-title">
-                        <small> Name: {{image.name}}</small></h4>
-                        <p> caption: {{image.caption}}</p>
-        
-                  <div class="modal-footer">
-
-                        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button> 
-                        <br>
-                        <small><p class="image-footer text-center" >Taken by {{image.name}} since {{image.pub_date|timesince}} ago </p></small>           
-                  </div>
-                       
-              </div>
-          </div>
-        </div>
-      </div>
+    <div class="row">
+       
     </div>
-</div>
-</div>
+    <div class='row'>
+    <div class='col-sm-8 col-md-8 col-xl-8'>
+    
+    {% for image in images %}
 
-{% empty %}
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <h2 class="text-center">No images yet!</h2>
-</div>
-   
-{% endfor %}
+<div class="card text-center">
+    <div class="card-header">
+      {{image.username}}
+      <img src="{{image.profile.profile_photo.url}}" class="img-thumbnail right-block" alt="Card image" style="width:10rem">
+    </div>
+    <div class="card-body">
 
-</div> 
-</div>
+   <img src="{{image.image_path.url}}" class="card-img-top" alt="images" >
+    </div>
+    <div class="card-footer text-muted">
+        {% for comment in image.comments.all %}
+        <a href="{{comment.user.username}}">{{comment.user.username}}</a> :{{comment.comment}}
+      2 days ago
+      {%endfor%}
 
-{% endblock %}
+
+      <form action="/likes/{{img.id}}" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+
+        {% bootstrap_form like %}
+        <button>
+            <div><i class="fa fa-heart" type='submit' style="font-size:30px;">{{img.likes.all|length}}</i></div>
+
+        </button>
+    </form>
+
+
+    <form id='comment' action="/comments/{{img.id}}" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+
+        {% bootstrap_form comment %}
+        <input type="submit" class="btn btn-primary btn-lg" value="Add comment">
+    </form>
+    </div>
+  </div>
+  {%endfor%}
+</div>
+<!-- <div class='col-sm-4 col-md-4 col-xl-4 prof'>
+    <img src="{{image.image_path.url}}" class="profile-img-top" alt="Card image" style="width:200px;border-radius: 50%">
+  <h3>{{image.user.username.image_path.url}}</h3>
+  <div class='foll row'>
+      <ul><li><strong>{{image_count}}</strong> Posts</li><li><strong>{{followers}}</strong>  Followers</li><li><strong>{{following}}</strong>  Following</li></ul>
+     
+      
+    
+    </div>
+</div> -->
+
+</div>
+</div>
+  {% endblock %}
 

@@ -17,9 +17,8 @@ class NewImageForm(forms.ModelForm):
 	class Meta:
 		model = Image
 		exclude = ['user','profile','time_updated','pub_date','name']
-        widgets = {
-            'tags': forms.CheckboxSelectMultiple(),
-        }
+        
+        
 
 
 

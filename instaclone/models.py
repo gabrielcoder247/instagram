@@ -11,7 +11,12 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     profile_photo = models.ImageField(upload_to = 'profile/') 
     bio = models.TextField(max_length=255) 
-    
+
+    @classmethod
+    def get_all(cls):
+        profile = Profile.objects.all()
+        return profile
+
 
     def find_profile(cls,first_name):
         profile = Profile.objects.filter_by_name(name__icontains=first_name).all()
@@ -36,6 +41,13 @@ class Image(models.Model):
     pub_date = models.DateField(auto_now_add=True)
     image_path = models.ImageField(upload_to = 'images/')
     profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
+
+
+    @classmethod
+    def get_all(cls):
+        images = Image.objects.all()
+        return images
+
 
     def save_image(self):
         self.save()

@@ -1,49 +1,62 @@
 {% extends 'all-images/base.html'%}
-{% load friendshiptags %}
 
 {% block content %}
 
 {{block.super}}
 
-<div class='container'>
-
-    <div class="row">
-      
-        {% if profile %}
-        <h2> Found {{profile|length }} your profile</h2>
-        {% else %}
-        <h2 profile not found></h2>
-        {% endif %}
-    </div>
-    <div class='row'>
-    <div class='col-sm-8 col-md-8 col-xl-8'>
-    {% for prof in profile %}
 
 
-<div class="card text-center">
-    <div class="card-header">
-      {{prof.user.username}}
+<div class "container-fluid">
+        <div class="row">
+            {% if images %}
+            <h2> Found {{profile|length }} your profile</h2>
+            {% else %}
+            <h2 profile not found></h2>
+            {% endif %}
+                
+    <!-- looping through news -->
+    {% for profile in profiles %}
+        <!-- display News articles -->
+        <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div class = "image-container">
+                <a class="thumbnail" data-image-id="{{image.id}}" data-toggle="modal" data-title="{{image.name}}" data-caption="{{image.caption}}" data-image="{{image.image_path.url}}" data-target="#{{image.id}}">
+                    <img src="{{profile.profile_photo.url}}" alt="{{image.caption}}" id="img{{image.id}}" class="img-thumbnail" alt="Image" style="width:100%; height:300px">
+                </a>
+    <!-- Displays modal nested in cards -->
+    <div class="modal fade reponsive" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:100px!important">
+          <div class="modal-content">
+              <div class="card" style="width:400px; height:530px">
+                  <img src="{{image.image_path.url}}" class="card-img-top" alt="Card image" style="width:100%;height:350px">
+                  <div class="card-body">
+                      <h4 class="card-title">
+                        <small> Name: {{image.name}}</small></h4>
+                        <p> caption: {{image.caption}}</p>
+        
+                  <div class="modal-footer">
+
+                        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button> 
+                        <br>
+                        <small><p class="image-footer text-center" >Taken by {{image.name}} since {{image.pub_date|timesince}} ago </p></small>           
+                  </div>
+                       
+              </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-<img src="{{prof.profile_photo.url}}" class="card-img-top" alt="Card image" style="width:100%;height:350px">
-      <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-    </div>
-    <div class="card-footer text-muted">
-      2 days ago
-    </div>
-  </div>
-  {%endfor%}
-</div>
-<div class='col-sm-4 col-md-4 col-xl-4 prof'>
-    <img src="{{prof.profile_photo.url}}" class="profile-img-top" alt="Card image" style="width:200px;border-radius: 50%">
-  <h3>{{prof.user.username}}</h3>
-  <div class='foll row'>
-      <ul><li><strong>{{image_count}}</strong> Posts</li><li><strong>{{followers}}</strong>  Followers</li><li><strong>{{following}}</strong>  Following</li></ul>
-     
-      
-    
-    </div>
 </div>
 </div>
+
+{% empty %}
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h2 class="text-center">No images yet!</h2>
 </div>
-  {% endblock %}
+   
+{% endfor %}
+
+</div> 
+</div>
+
+{% endblock %}
+

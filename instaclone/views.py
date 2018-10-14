@@ -12,19 +12,14 @@ from django.http import HttpResponse, Http404,HttpResponseRedirect
 
 def home(request):
     #query all images by id
-    images = Image.objects.all()
-	profile = Profile.objects.all()
+	images = Image.get_all()
+	profiles = Profile.get_all()
 	current_user = request.user
 	comment = CommentForm()
 	like = LikesForm()
     # user = User.objects.all()
     
-    return render(request, 'home.html', {"images":images,
-										"current_user":current_user,
-										"comment":comment,
-										"like":like,
-										"profile":profile,
-										})
+	return render(request, 'home.html', {"images":images,"current_user":current_user,"comment":comment,"like":like,"profiles":profiles })
 
 @login_required(login_url='/accounts/login/')
 def profile(request):
