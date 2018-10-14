@@ -94,7 +94,4 @@ def otherprofile(request,others_user):
 	following=len(Follow.objects.following(request.user))
 	image_count=len(Image.objects.filter(user_id=other_users))
 	images=Image.objects.filter(user_id=other_users)
-	return render(request,'profile_other.html',{"followers":followers,"other_users":other_users,
-	"following":following,"image_count":image_count,"images":images}
-
-
+	return render(request,'profile_other.html',{"followers":followers,"other_users":other_users,"following":following,"image_count":image_count,"images":images})

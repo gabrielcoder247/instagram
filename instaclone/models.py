@@ -31,7 +31,8 @@ class Profile(models.Model):
 class Image(models.Model):
     name = models.CharField(max_length=30)
     caption = models.CharField(max_length=30)
-    comments = models.CharField(max_length=500)
+    image_comments = models.CharField(max_length=500)
+    image_likes = models.PositiveIntegerField()
     pub_date = models.DateField(auto_now_add=True)
     image_path = models.ImageField(upload_to = 'images/')
     profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
@@ -69,6 +70,22 @@ class Image(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User,null=True)
+    post=models.ForeignKey(Image,related_name='comments',null=True)
+    comment=models.CharField(max_length=200,null=True)
+
+    def __str__(self):
+        return self.comment
+
+class Likes(models.Model):
+    user = models.OneToOneField(User,related_name='likes_user')
+    post=models.ForeignKey(Image,related_name='likes')
+    likes=models.CharField(max_length=3,default='1')
+
+
 
 
     
