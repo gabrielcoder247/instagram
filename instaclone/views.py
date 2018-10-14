@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from . models import Image,Profile,Likes,Comments
 from .email import send_welcome_email
-from .forms import NewProfileForm,NewImageForm
+from .forms import NewProfileForm,NewImageForm,CommentForm,LikesForm
 from friendship.models import Friend, Follow
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 
@@ -13,9 +13,18 @@ from django.http import HttpResponse, Http404,HttpResponseRedirect
 def home(request):
     #query all images by id
     images = Image.objects.all()
-    user = User.objects.all()
+	profile = Profile.objects.all()
+	current_user = request.user
+	comment = CommentForm()
+	like = LikesForm()
+    # user = User.objects.all()
     
-    return render(request, 'home.html', {"images":images,"user":user})
+    return render(request, 'home.html', {"images":images,
+										"current_user":current_user,
+										"comment":comment,
+										"like":like,
+										"profile":profile,
+										})
 
 @login_required(login_url='/accounts/login/')
 def profile(request):
