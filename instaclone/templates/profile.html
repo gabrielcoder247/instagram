@@ -7,20 +7,80 @@
 
 
 <div class "container-fluid">
+
+
+    <header>
         <div class="row">
-            {% if images %}
+        {% if profile %}
+            <!-- <h2> Found {{profile|length }} your profile</h2>
+            {% else %}
+            <h2 profile not found></h2>
+            {% endif %} -->
+        </div>   
+        {% for profile in profile %}
+        <div class="container">
+      
+          <div class="profile">
+          
+            <div class="profile-image">
+      
+              <img src="{{profile.profile_photo.url}}" class="img-thumbnail" style="width:5rem"alt="image">
+      
+            </div>
+      
+            <div class="profile-user-settings">
+      
+              <h1 class="profile-user-name">{{profile.user.username}}</h1>
+          {% endfor%}
+  
+          <form action="{%url 'new_profile'%}" >    
+          <button class="btn profile-edit-btn">Edit Profile</button>
+          </form>
+              <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+      
+            </div>
+      
+            <div class="profile-stats">
+      
+              <ul>
+                <li><span class="profile-stat-count">164</span> posts</li>
+                <li><span class="profile-stat-count">188</span> followers</li>
+                <li><span class="profile-stat-count">206</span> following</li>
+              </ul>
+      
+            </div>
+      
+            <div class="profile-bio">
+      
+              <p><span class="profile-real-name">Jane Doe</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
+      
+            </div>
+      
+          </div>
+          <!-- End of profile section -->
+      
+        </div>
+        <!-- End of container -->
+      
+      </header>
+      
+
+
+        <!-- <div class="row">
+            {% if profile %}
             <h2> Found {{profile|length }} your profile</h2>
             {% else %}
             <h2 profile not found></h2>
             {% endif %}
+        </div>     -->
                 
     <!-- looping through news -->
-    {% for profile in profiles %}
+    {% for image in images %}
         <!-- display News articles -->
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <div class = "image-container">
                 <a class="thumbnail" data-image-id="{{image.id}}" data-toggle="modal" data-title="{{image.name}}" data-caption="{{image.caption}}" data-image="{{image.image_path.url}}" data-target="#{{image.id}}">
-                    <img src="{{profile.profile_photo.url}}" alt="{{image.caption}}" id="img{{image.id}}" class="img-thumbnail" alt="Image" style="width:100%; height:300px">
+                    <img src="{{image.image_path.url}}" alt="{{image.caption}}" id="img{{image.id}}" class="img-thumbnail" alt="Image" style="width:100%; height:300px">
                 </a>
     <!-- Displays modal nested in cards -->
     <div class="modal fade reponsive" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -56,7 +56,7 @@ def new_profile(request):
 		form = NewProfileForm(request.POST,request.FILES, instance=request.user.profile)
 		if form.is_valid():
 			form.save()
-			return redirect('current_profile')
+			return redirect('profile')
 
 	else:
 			form = NewProfileForm()
