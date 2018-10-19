@@ -1,30 +1,41 @@
 {% extends 'all-images/base.html'%}
-<!-- {% load friendshiptags %} -->
+{% load friendshiptags %}
 {% load staticfiles %}
 {% load bootstrap4 %}
+
+<link href="https://fonts.googleapis.com/css?family=Charmonman|Dancing+Script|Kodchasan|Spirax|Abril+Fatface" rel="stylesheet">
 
 {% block content %}
 
 {{block.super}}
 
-<div class='container'>
+<div class='container mt-5'>
+        <!-- <div class="jumbotron text-center mb-0" style="background-color:white;">
+
+                <h1 class="h1" style="font-family: 'Grand Hotel', cursive; color:blue;font-size:70px;">Instagram</h1>
+            
+              </div> -->
 
     <div class="row">
        
     </div>
     <div class='row'>
+        <div class="col-md-2"></div>
     <div class='col-sm-8 col-md-8 col-xl-8'>
     
     {% for image in images %}
 
-<div class="card text-center">
+<div class="card text-center image_card">
     <div class="card-header">
-      {{image.username}}
-      <img src="{{image.profile.profile_photo.url}}" class="img-thumbnail right-block" alt="Card image" style="width:10rem">
+       
+      <img src="{{image.profile.profile_photo.url}}" style="width:4rem" data-target="#imageModal{{image.id}}" data-toggle="modal" class="rounded-circle border  user" alt="Card image">
+      
+      <a href=""><p style="font-family: Georgia, 'Times New Roman', Times, serif"> {{image.profile.user}}</p></a>
     </div>
-    <div class="card-body">
+    <div class="card-body "><a href="{% url 'image' image.id %}">
 
-   <img src="{{image.image_path.url}}" class="card-img-top" alt="images" >
+   <img src="{{image.image_path.url}}" class="card-img-top" alt="images"  data-target="#imageModal{{image.id}}">
+   </a>
     </div>
     <div class="card-footer text-muted">
         {% for comment in image.comments.all %}
@@ -32,7 +43,7 @@
       2 days ago
       {%endfor%}
 
-
+<!-- 
       <form action="/likes/{{img.id}}" method="post" enctype="multipart/form-data">
         {%csrf_token%}
 
@@ -49,23 +60,15 @@
 
         {% bootstrap_form comment %}
         <input type="submit" class="btn btn-primary btn-lg" value="Add comment">
-    </form>
+    </form> -->
     </div>
   </div>
   {%endfor%}
 </div>
-<!-- <div class='col-sm-4 col-md-4 col-xl-4 prof'>
-    <img src="{{image.image_path.url}}" class="profile-img-top" alt="Card image" style="width:200px;border-radius: 50%">
-  <h3>{{image.user.username.image_path.url}}</h3>
-  <div class='foll row'>
-      <ul><li><strong>{{image_count}}</strong> Posts</li><li><strong>{{followers}}</strong>  Followers</li><li><strong>{{following}}</strong>  Following</li></ul>
-     
-      
-    
-    </div>
-</div> -->
+<div class="col-md-2"></div>
 
 </div>
 </div>
+
   {% endblock %}
 

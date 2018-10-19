@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from . models import Image,Profile,Likes,Comments
@@ -23,12 +23,13 @@ def home(request):
 
 @login_required(login_url='/accounts/login/')
 def profile(request):
-    profile = Profile.objects.all()
-    user = User.objects.all()
-    followers=len(Follow.objects.followers(request.user))
-    following=len(Follow.objects.following(request.user))
+	images= Image.get_all()
+	profiles = Profile.objects.all()
+	user = User.objects.all()
+	followers=len(Follow.objects.followers(request.user))
+	following=len(Follow.objects.following(request.user))
 
-    return render(request, 'profile.html', {"profile":profile,"user":user})
+	return render(request, 'profile.html', {"profiles":profiles,"user":user,"images":images})
 
     
 
@@ -64,18 +65,46 @@ def new_profile(request):
 
 
 @login_required(login_url='/accounts/login')
-def new_image(request):
+def image(request,id):
+
+	try:
+		image = Image.objects.get(pk = id)
+		
+	except DoesNotExist:
+		raise Http404()
+
 	current_user = request.user
+	comments = Comments.get_comment(Comments,id)
+
 	if request.method == 'POST':
-		form = NewImageForm(request.POST,request.FILES)
+		form = CommentForm(request.POST)
 		if form.is_valid():
-			article = form.save(commit=False)
-			article.user = current_user
-			article.save()
-			return redirect('current_profile')
+			comment = form.cleaned_data['comment']
+			review = Comments()
+			review.image = image
+			review.user = current_user
+			review.comment=comment
+			review.save()
+			
 	else:
-			form = NewImageForm()
-	return render(request, 'new_image.html',{"form":form })
+		form = CommentForm()
+	return render(request,'image.html',{"image":image,"form":form,"comments":comments})
+
+@login_required(login_url='/accounts/login/')
+def new_image(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user = current_user
+            image.save()
+        return redirect('home_page')
+
+    else:
+        form = NewImageForm()
+    return render(request, 'registration/new_image.html', {"form": form})
+
 
 
 @login_required(login_url='/accounts/login')
@@ -99,3 +128,17 @@ def otherprofile(request,others_user):
 	image_count=len(Image.objects.filter(user_id=other_users))
 	images=Image.objects.filter(user_id=other_users)
 	return render(request,'profile_other.html',{"followers":followers,"other_users":other_users,"following":following,"image_count":image_count,"images":images})
+
+
+# @login_required(login_url='/accounts/login')
+# def comment(request,id):
+#     upload = Image.objects.get(id=id)
+#     if request.method == 'POST':
+#         comm=CommentForm(request.POST)
+#         if comm.is_valid():
+#             comment=comm.save(commit=False)
+#             comment.user = request.user
+#             comment.post=upload
+#             comment.save()
+#             return redirect('home')
+#     return redirect('home')

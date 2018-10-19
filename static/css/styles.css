@@ -1,0 +1,10 @@
+li {
+    display: inline;
+}
+
+#footer1 li{
+margin-top: 20px;
+padding: 10px;
+font-size: 10px;
+
+}

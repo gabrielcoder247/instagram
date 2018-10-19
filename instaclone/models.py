@@ -8,9 +8,12 @@ from datetime import datetime as dt
 class Profile(models.Model):
     pub_date = models.DateField(auto_now_add=True)
     likes = models.IntegerField(default=0)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user=models.OneToOneField(User, on_delete=models.CASCADE, blank=True, related_name="profile")
     profile_photo = models.ImageField(upload_to = 'profile/') 
     bio = models.TextField(max_length=255) 
+    followers = models.ManyToManyField(User, related_name="followers_profile", blank=True)
+    following = models.ManyToManyField(User, related_name="following_profile", blank=True)
+
 
     @classmethod
     def get_all(cls):
@@ -27,8 +30,34 @@ class Profile(models.Model):
     def save_user(self):
          self.save()
 
+    def delete_profile(self):
+        self.delete()     
+
+
+    def follow_user(self, follower):
+        return self.following.add(follower)
+
+    def unfollow_user(self, to_unfollow):
+        return self.following.remove(to_unfollow)
+
+    def is_following(self, checkuser):
+        return checkuser in self.following.all()
+
+    def get_number_of_followers(self):
+        if self.followers.count():
+            return self.followers.count()
+        else:
+            return 0
+
+    def get_number_of_following(self):
+        if self.following.count():
+            return self.following.count()
+        else:
+            return 0
+     
+
     def __str__(self):
-        return self.bio
+        return self.user.username
 
   
 
@@ -89,6 +118,11 @@ class Comments(models.Model):
     post=models.ForeignKey(Image,related_name='comments',null=True)
     comment=models.CharField(max_length=200,null=True)
 
+
+    def get_comment(self,id):
+        comments = self.objects.filter(id=id)
+        return comments
+
     def __str__(self):
         return self.comment
 
@@ -96,6 +130,12 @@ class Likes(models.Model):
     user = models.OneToOneField(User,related_name='likes_user')
     post=models.ForeignKey(Image,related_name='likes')
     likes=models.CharField(max_length=3,default='1')
+
+class Followers(models.Model):
+
+    user = models.CharField(max_length=20, default="")
+    follower = models.CharField(max_length=20, default="")
+
 
 
 

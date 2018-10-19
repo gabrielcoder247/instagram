@@ -15,7 +15,7 @@
     {% bootstrap_css %}
 
   {% endblock %}
-
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     {% include "navbar.html" %}
@@ -29,5 +29,6 @@
         
      {% bootstrap_javascript %}
     {% endblock %}
+    {% include "footer.html" %}
 </body>
 </html>
