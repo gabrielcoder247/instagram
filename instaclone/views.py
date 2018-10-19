@@ -39,10 +39,10 @@ def search_results(request):
     #query all username to find search_term  
     if 'username' in request.GET and request.GET["username"]:
         search_term =request.GET.get("username")
-        search_images = Image.search_image(search_term)
+        search_user = Image.search_users(search_term)
         message = f"{search_term}"
 
-        return render(request,'search.html',{"message":message, "searched":search_images})
+        return render(request,'search.html',{"message":message, "searched":search_})
 
     else:
 
@@ -51,7 +51,7 @@ def search_results(request):
 
 
 @login_required(login_url='/accounts/login')
-def new_profile(request):
+def edit_profile(request):
 	current_user = request.user
 	if request.method == 'POST':
 		form = NewProfileForm(request.POST,request.FILES, instance=request.user.profile)

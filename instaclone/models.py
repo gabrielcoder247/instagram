@@ -64,6 +64,7 @@ class Profile(models.Model):
 
 class Image(models.Model):
     name = models.CharField(max_length=30)
+    username = models.CharField(max_length=30)
     caption = models.CharField(max_length=30)
     image_comments = models.CharField(max_length=500)
     image_likes = models.PositiveIntegerField()
@@ -96,11 +97,10 @@ class Image(models.Model):
 
         return updated    
         
-
     @classmethod
-    def get_image_by_id(cls, id):
-        images = cls.objects.all(id = id).all()
-        return images
+    def search_users(cls, search_term):
+        profiles = cls.objects.filter(username__icontains=search_term)
+        return profiles
                 
         
 
