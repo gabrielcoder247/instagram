@@ -6,6 +6,7 @@ from datetime import datetime as dt
 
 
 class Profile(models.Model):
+
     pub_date = models.DateField(auto_now_add=True)
     likes = models.IntegerField(default=0)
     user=models.OneToOneField(User, on_delete=models.CASCADE, blank=True, related_name="profile")

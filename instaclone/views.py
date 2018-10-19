@@ -42,7 +42,7 @@ def search_results(request):
         search_user = Image.search_users(search_term)
         message = f"{search_term}"
 
-        return render(request,'search.html',{"message":message, "searched":search_})
+        return render(request,'search.html',{"message":message, "searched":search_user})
 
     else:
 
