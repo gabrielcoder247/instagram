@@ -1,0 +1,21 @@
+.phones_image img{
+    width: 80%;
+    height: 30%;
+    /* transform: translatex(-10%); */
+}
+
+.Reg_panel{
+    border:1px  solid #E6E6E6;
+    width: 80%;
+    height: 30%;
+    float: left;
+    left: 1%;
+
+}
+
+#button1{
+    background-color: blue;
+    border-radius: 4px;
+    border: 0px;
+    width:40%;
+}

@@ -10,7 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 # Create your views here.
-
+@login_required(login_url='/accounts/login/')
 def home(request):
     #query all images by id
 	images = Image.get_all()
@@ -23,7 +23,7 @@ def home(request):
 	return render(request, 'home.html', {"images":images,"current_user":current_user,"comment":comment,"like":like,"profiles":profiles })
 
 def signup(request):
-	if request.method == POST:
+	if request.method == 'POST':
 		form = SignUpForm(request.POST, request.FILES)
 		if form.is_valid():
 			user = form.save()
@@ -33,7 +33,7 @@ def signup(request):
 			raw_password = form.cleaned_data.get('password1')
 			user = authenicate(username =username, password=raw_password)
 			login(request, user)
-		return redirect('home')
+		return redirect('home_page')
 	else:
 		form = SignUpForm()
 	return render(request, 'signup.html', {"form":form})		
@@ -47,7 +47,7 @@ def profile(request):
 	followers=len(Follow.objects.followers(request.user))
 	following=len(Follow.objects.following(request.user))
 
-	return render(request, 'profile.html', {"profiles":profiles,"user":user,"images":images})
+	return render(request, 'profile/profile.html', {"profiles":profiles,"user":user,"images":images})
 
     
 
