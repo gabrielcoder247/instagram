@@ -3,9 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from . models import Image,Profile,Likes,Comments
 from .email import send_welcome_email
-from .forms import NewProfileForm,NewImageForm,CommentForm,LikesForm
+from .forms import NewProfileForm,NewImageForm,CommentForm,LikesForm,SignUpForm
 from friendship.models import Friend, Follow
 from django.http import HttpResponse, Http404,HttpResponseRedirect
+from django.contrib.auth.forms import UserCreationForm
 
 
 # Create your views here.
@@ -20,6 +21,23 @@ def home(request):
     # user = User.objects.all()
     
 	return render(request, 'home.html', {"images":images,"current_user":current_user,"comment":comment,"like":like,"profiles":profiles })
+
+def signup(request):
+	if request.method == POST:
+		form = SignUpForm(request.POST, request.FILES)
+		if form.is_valid():
+			user = form.save()
+			user.refresh_from_db()
+			user.save()
+			username = form.cleaned_data.get('username')
+			raw_password = form.cleaned_data.get('password1')
+			user = authenicate(username =username, password=raw_password)
+			login(request, user)
+		return redirect('home')
+	else:
+		form = SignUpForm()
+	return render(request, 'signup.html', {"form":form})		
+
 
 @login_required(login_url='/accounts/login/')
 def profile(request):
