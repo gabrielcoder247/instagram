@@ -1,110 +1,80 @@
 {% extends 'base.html'%}
-{% load bootstrap4 %}
-
+{% load static %}
+{% block styles %}
+  {{block.super}}
+  <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+{% endblock %}
 {% block content %}
-
-{{block.super}}
-
-
-
-<div class "container-fluid">
-
-
-    <header>
+<div class="container-fluid ">
+  <div class="wrapper border-bottom">
+    <div class="row">
+      <div class="col-md-4 mt-4">
+        {% if current_profile.profile_photo%}
+          <img src="{{ current_profile.profile_photo.url }}" style="width:10rem" data-target="#imageModal{{image.id}}" data-toggle="modal" class="rounded-circle border  profile" alt="profile_img">
+        {% endif %}
+      </div>
+      <div class="col-md-8 mr-5 mt-4">
         <div class="row">
-        {% if profiles %}
-            <!-- <h2> Found {{profile|length }} your profile</h2> -->
-            {% else %}
-            <h2 profile not found></h2>
-            {% endif %}
-        </div> 
-        <div class="container"> 
-            
-        {% for profile in profiles %}
-        
-      
-          <div class="profile">
-          
-            <div class="profile-image">
-      
-              <img src="{{profile.profile_photo.url}}" class="rounded-circle border userimage" style="width:4rem"alt="image">
-      
-            </div>
-      
-            <!-- <div class="profile-user-settings">
-      
-              <h1 class="profile-user-name">{{profile.user.username}}</h1>
-            </div> -->
-      
-            <div>
-                <small>{{ profile.user }}</small>
-            </div>
-            <div><span>{{ profile.user.bio }}</span></div>
-            <div> <span class="info"><strong>{{profile.username.image_path.count }}</strong> posts</span></div>
-        </div>
-          {% endfor%}
-  
-          <form action="{%url 'edit_profile'%}" >    
-          <button class="btn profile-edit-btn mb-2">Edit Profile</button>
-          </form>
-    
-          </div>
-          <!-- End of profile section -->
-      
-
-        <!-- End of container -->
-      
-      </header>
-       
-    <!-- looping through news -->
-    <div class="container-fluid images">
+          <div class="col-md-4">
             <div class="row">
-    {% for image in images %}
-        <!-- display News articles -->
-        <div class = "col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <div class = "image-container">
-                <a class="thumbnail" data-image-id="{{image.id}}" data-toggle="modal" data-title="{{image.name}}" data-caption="{{image.caption}}" data-image="{{image.image_path.url}}" data-target="#{{image.id}}">
-                    <img src="{{image.image_path.url}}" alt="{{image.caption}}" id="img{{image.id}}" class="img-thumbnail" alt="Image" style="width:100%; height:300px">
-                </a>
-    <!-- Displays modal nested in cards -->
-    <div class="modal fade reponsive" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:100px!important">
-          <div class="modal-content">
-              <div class="card" style="width:400px; height:530px">
-                  <img src="{{image.image_path.url}}" class="card-img-top" alt="Card image" style="width:100%;height:350px">
-                  <div class="card-body">
-                      <h4 class="card-title">
-                        <small> Name: {{image.name}}</small></h4>
-                        <p> caption: {{image.caption}}</p>
-        
-                  <div class="modal-footer">
-
-                        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button> 
-                        <br>
-                        <small><p class="image-footer text-center" >Taken by {{image.name}} since {{image.pub_date|timesince}} ago </p></small>           
-                  </div>
-                       
+              <div class="col-md-6 pd-5"><p class="bold" style="color:rgba(0, 0, 255,1);">{{current_profile.user.username}}</p></div>
+              <div class="col-md-6">
+                <p>
+                  {% if not current_profile.user.id == request.user.id%}
+                    {% if is_follow %}
+                  <a href="{%url 'follow' current_profile.id %}"><button type="submit" class="btn btn-outline-primary fol">Unfollow</button></a>
+                    {% else %}
+                  <a href="{%url 'follow' current_profile.id %}"><button type="submit" class="btn btn-outline-primary fol">follow</button></a>
+                   {% endif %}
+                  {%endif%}
+                </p>
               </div>
+            </div>
           </div>
+          <div class="col-md-8">  {% if current_profile.user.id == request.user.id%}
+              <a type="button" class="edit" href="{% url 'edit_profile'%}">Edit Profile</a>
+            {% endif%}
+          </div>
+        </div>
+        <div class="row buttons">
+          <p>5<small>posts</small></p>
+          <p>{{ current_profile.get_following.count}}<small>following</small></p>
+          <p>{{current_profile.user.followed_by.all.count}}<small>followers</small></p>
+        </div>
+        <div class="bio">
+          <p><span class="bold">{{ current_profile.user.name }} {{ current_profile.user.name}}</span></p>
+          <p>{{ current_profile.bio}}</p>
+        </div>
+        <div class="">
+          <p>Following</p>
+          {% for user in current_profile.get_following %}
+          <p><a href="{% url 'profile' user.id %}">{{user.name}}</a></p>
+          {% empty %}
+          <p>you are not following any user</p>
+          {% endfor %}
+
+          <p>Followers</p>
+          {% for user in current_profile.user.followed_by.all %}
+          <p><a href="{% url 'profile' user.id %}">{{ user.user.name}}</a></p>
+          {% empty %}
+          <p>Your're Not followed by any user</p>
+          {% endfor %}
         </div>
       </div>
     </div>
-</div>
-</div>
+  </div>
+  <div class="container post_span">
+    <h4 class="text-center">Posts</h4>
 
+    <div class="row">
+        {% for image in images %}
+      <div class="col-md-4 pd-5 profile_img">
+          <img class="img-responsive" src="{{image.image_path.url}}" alt="">
+      </div>
+      {%endfor%}
+    </div>
 
-
-{% empty %}
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <h2 class="text-center">No images yet!</h2>
+  </div>
 </div>
-   
-{% endfor %}
-
-</div> 
-</div>
-</div>
-
 
 {% endblock %}
-

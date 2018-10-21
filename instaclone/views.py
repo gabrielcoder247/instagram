@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from . models import Image,Profile,Likes,Comments
 from .email import send_welcome_email
 from .forms import NewProfileForm,NewImageForm,CommentForm,LikesForm,SignUpForm
-from friendship.models import Friend, Follow
+from friendship.models import Friend, Follow, Block
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 
@@ -14,7 +14,7 @@ from django.contrib.auth.forms import UserCreationForm
 def home(request):
     #query all images by id
 	images = Image.get_all()
-	profiles = Profile.get_all()
+	profiles = Profile.get_all_profiles()
 	current_user = request.user
 	comment = CommentForm()
 	like = LikesForm()
@@ -40,14 +40,18 @@ def signup(request):
 
 
 @login_required(login_url='/accounts/login/')
-def profile(request):
-	images= Image.get_all()
-	profiles = Profile.objects.all()
-	user = User.objects.all()
-	followers=len(Follow.objects.followers(request.user))
-	following=len(Follow.objects.following(request.user))
+def profile(request, profile_id):
+	
+	current_profile = Profile.objects.get(id=profile_id)
+	images= Image.objects.filter(profile=current_profile)
+	follows=Profile.objects.get(id=request.user.id)
+	is_follow =False
+	if follows.following.filter(id=profile_id).exists():
+		is_follow=True	
+	following=follows.following.all()
+	followers=follows.user.followed_by.all()
 
-	return render(request, 'profile/profile.html', {"profiles":profiles,"user":user,"images":images})
+	return render(request, 'profile/profile.html', {"current_profile":current_profile,"images":images, "follows":follows, "is_follow":is_follow, "following":following, "followers":followers})
 
     
 
@@ -126,7 +130,7 @@ def new_image(request):
 
 
 @login_required(login_url='/accounts/login')
-def follow_function(request,other_user):
+def follow(request,other_user):
 	other_users=User.objects.get(id=other_user)
 	addfollow=Follow.objects.add_follower(request.user, other_users)
 	return redirect('home')    
@@ -160,3 +164,20 @@ def otherprofile(request,others_user):
 #             comment.save()
 #             return redirect('home')
 #     return redirect('home')
+
+# @login_required(login_url='/accounts/login')
+# def comment(request, image_id):
+#     current_user = request.user
+#     current_image = Image.objects.get(id=image_id)
+
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             comment_form = form.save(commit=False)
+#             comment_form.user = current_user
+#             comment_form.image = current_image
+#             comment_form.save()
+#         return redirect('home')
+#     else:
+#         form = CommentForm()
+#     return render(request, 'comment.html', {"form": form, "current_image": current_image})

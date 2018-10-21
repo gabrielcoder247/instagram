@@ -1,0 +1,7 @@
+.profile_img img{
+    border:2px  solid #E6E6E6;
+    width: 80%;
+    height: 100%;
+    float: left;
+    left: 1%;
+}

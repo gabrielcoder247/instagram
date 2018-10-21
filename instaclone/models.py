@@ -13,13 +13,13 @@ class Profile(models.Model):
     profile_photo = models.ImageField(upload_to = 'profile/') 
     bio = models.TextField(max_length=255) 
     followers = models.ManyToManyField(User, related_name="followers_profile", blank=True)
-    following = models.ManyToManyField(User, related_name="following_profile", blank=True)
+    following = models.ManyToManyField(User, related_name="followed_by", blank=True)
 
 
-    @classmethod
-    def get_all(cls):
-        profile = Profile.objects.all()
-        return profile
+    
+    def get_following(self):
+        users=self.following.all()
+        return users.exclude
 
 
     def find_profile(cls,first_name):
@@ -35,11 +35,15 @@ class Profile(models.Model):
         self.delete()     
 
 
-    def follow_user(self, follower):
-        return self.following.add(follower)
+    def get_following(self):
+        users=self.following.all()
 
-    def unfollow_user(self, to_unfollow):
-        return self.following.remove(to_unfollow)
+        return users.exclude(username=self.user.username)
+        
+    @classmethod
+    def get_all_profiles(cls):
+        profile= Profile.objects.all()
+        return profile
 
     def is_following(self, checkuser):
         return checkuser in self.following.all()
@@ -115,7 +119,7 @@ class Image(models.Model):
 
 
 class Comments(models.Model):
-    user = models.ForeignKey(User,null=True)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='user')
     post=models.ForeignKey(Image,related_name='comments',null=True)
     comment=models.CharField(max_length=200,null=True)
 
@@ -123,6 +127,9 @@ class Comments(models.Model):
     def get_comment(self,id):
         comments = self.objects.filter(id=id)
         return comments
+        
+    def save_comment(self):
+        self.save()    
 
     def __str__(self):
         return self.comment
