@@ -120,13 +120,13 @@ class Image(models.Model):
 
 class Comments(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='user')
-    post=models.ForeignKey(Image,related_name='comments',null=True)
+    image=models.ForeignKey(Image, on_delete=models.CASCADE, related_name='comments')
     comment=models.CharField(max_length=200,null=True)
 
 
     def get_comment(self,id):
-        comments = self.objects.filter(id=id)
-        return comments
+        comment = Comments.objects.filter(image_id=id)
+        return comment
         
     def save_comment(self):
         self.save()    
