@@ -27,7 +27,7 @@
        
       <img src="{{image.profile.profile_photo.url}}" style="width:4rem" data-target="#imageModal{{image.id}}" data-toggle="modal" class="rounded-circle border  user" alt="Card image">
       <br>
-      <a href="" class="username"><p style="font-family: Georgia, 'Times New Roman', Times, serif"> {{image.profile.user}}</p></a>
+      <a href="" class="username"><p style="font-family: Georgia, 'Times New Roman', Times, serif"> {{image.profile.user.username}}</p></a>
     </div>
     <div class="card-body "><a href="{% url 'image' image.id %}">
 
@@ -35,10 +35,11 @@
    </a>
     </div>
     <div class="card-footer text-muted">
-        {% for comment in image.comments.all %}
-        <a href="{{comment.user.username}}">{{comment.user.username}}</a> :{{comment.comment}}
-      2 days ago
-      {%endfor%}
+        <!-- {% for comment in image.comments.all %}
+
+        <p class="comment_page text-left"> <a href="{{comment.user.username}}"> {{comment.user.username}}</a> <small></small> {{comment.comment}}</p>
+      
+      {%endfor%} -->
 
 <!-- 
       <form action="/likes/{{img.id}}" method="post" enctype="multipart/form-data">

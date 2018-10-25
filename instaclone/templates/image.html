@@ -4,70 +4,89 @@
 {% block content %}
 <link href="https://fonts.googleapis.com/css?family=Charmonman|Dancing+Script|Kodchasan|Spirax|Abril+Fatface" rel="stylesheet">
 
-<!-- <div class="container">
+<div class="container mt-2">
 
-  <div class="jumbotron text-center" style="background-color:white;">
+  <!-- <div class="jumbotron text-center" style="background-color:white;">
 
     <h1 class="h1" style="font-family: 'Grand Hotel', cursive; color:blue;font-size:70px;">Instagram</h1>
 
-  </div>
-</div> -->
+
+  </div> -->
+
 
 
 <div class="container">
-  <div class="row">
-    <div class="col-md-2"></div>
-<div class="card mt-3" style="width:40rem;;">
+<div class="card mb-3" style="width:40rem;;">
   <img class="card-img-top" src="{{image.image_path.url}}" alt="Card image cap" class="img-fluid" size="100px200">
-  
+  <div class="card border-secondary">
+      <div class="card-header">
+  <div class="card-body">
+    <div class="container mt-2 mx-auto p-5" style="background-color:#ffffff; border: 1px solid #e6e6e6;">
+    <button class="btn btn-lg btn-danger">Like This Image</button>
 
 
-     <!-- <div class="card-body text-primary"> -->
 
 
-     <!-- <p style="font-family: 'Oswald', sans-serif;">{{image.comments}}</p> -->
+    <!--*****************-->
+    <!--TESTING LIKE BUTTON-->
+
+    <a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> {{image.image_likes}}
+
+<form id="likebutton" method="POST" action="/posts/{{image.id}}/preference/1/">
+{% csrf_token %}
+<input type="hidden">
+</form>
+
+
+    <!--********************-->
+
+    
+    <!-- <p class="card-text" style="font-family: 'Oswald', sans-serif;"><strong>Location:</strong> -->
+      <br>
+     
+      {{image.caption}}</p>
+    <p class="card-text" style="font-family: 'Oswald', sans-serif;"><small class="text-muted">Posted by <strong> {{image.name}}</strong></small></p>
+  </div>
+
+     <!-- <h5 style="font-family: 'Oswald', sans-serif;">Image Comment</h5> -->
+       </div>
+
+
+     <div class="card-body text-primary">
+
+
+     <p style="font-family: 'Oswald', sans-serif;">{{image.comment}}</p>
 
 
        {% for comment in comments %}
-       <div class="container mt-2 mx-auto p-5" style="background-color:#ffffff; border: 1px solid #e6e6e6;">
-          <div class="card border-secondary">
-       <div class="card-body">
-          <button class="btn btn-lg btn-danger">Like This Image</button>
-      
-          <!--*****************-->
-          <!--TESTING LIKE BUTTON-->
-      
-          <a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> {{comment.image.image_likes}}
-      
-      <form id="likebutton" method="POST" action="/posts/{{image.id}}/preference/1/">
-      {% csrf_token %}
-      <input type="hidden">
-      </form>
-          <!--********************-->
-            {{comment.image.caption}}</p>
-          <p class="card-text" style="font-family: 'Oswald', sans-serif;"><small class="text-muted">Posted by {{image.name}}</small></p>
-        
-        
-           <!-- <div class="card-header"> -->
-           
 
-       <p style="font-family: 'Oswald', sans-serif;"> {{ comment }}</p>
- 
-          <hr>
-          <form action=""  method="post">
-            {%csrf_token%} {% bootstrap_form form %}
-              <input type="submit" class="btn btn-outline-primary" value="Post">
-          </form>
-          <hr>
-        </div>     
-</div>
-</div>
+       <!-- <h5 class="card-title" style="font-family: 'Oswald', sans-serif;"></h5> -->
+
+        <p style="font-family: 'Oswald', sans-serif;">  <strong> {{image.name}}</strong> {{ comment }}</p>
+
        {% endfor%}
-       
-    
+
+     </div>
+   </div>
 </div>
-<div class="col-md-2"></div>
-</div>
+<form action=""  method="post">
+    {%csrf_token%} {% bootstrap_form form %}
+      <input type="submit" class="btn btn-primary" value="Post">
+  </form>
+  <hr>
 </div>
 
-{%endblock%}
+
+
+<!-- 
+  <h3 style="font-family: 'Oswald', sans-serif;">Add your comment</h3> -->
+  <hr>
+  
+</div>
+<div class="container">
+    <div class="col-md-12">
+
+    </div>
+  </div>
+</div>
+{% endblock %}
