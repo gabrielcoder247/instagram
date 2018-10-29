@@ -6,8 +6,8 @@ from . import views as core_views
 urlpatterns =[
 
    
-    url(r'^signup/$', views.signup, name='signup'),
-     url(r'^profile/(\d+)/$', views.profile, name='profile'),
+    url(r'^signup/$', core_views.signup, name='signup'),
+    url(r'^profile/(\d+)/$', views.profile, name='profile'),
     url(r'^search/', views.search_results,name='search_results'),
     url(r'^new/image$',views.new_image,name='new_image'),
     url(r'^edit/profile/',views.edit_profile,name='edit_profile'),
@@ -15,7 +15,6 @@ urlpatterns =[
     url(r'^follow/(\d+)', views.follow, name="follow"),
     url(r'^image/(\d+)',views.image,name ='image'),
     url(r'^likes/(\d+)', views.likes, name='likes'),
-    url(r'^signup/$', core_views.signup, name='signup'),
     # url(r'^comment/(\d+)', views.image, name='comment'),
     
     
