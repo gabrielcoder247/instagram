@@ -160,7 +160,6 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # DATABASE_URL= 'postgres://zpsekwenrsjcnh:23b017d6cbce2af42fa244e810b609e09c105fb8c3bad6fb844fd4e228ad90b5@ec2-75-101-153-56.compute-1.amazonaws.com:5432/d3hc8kdj158md9'
 # Configure Django App for Heroku.
-django_heroku.settings(locals())
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -182,9 +181,6 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
 
-ALLOWED_HOSTS = []
-
-
 UPLOADCARE = {
     'pub_key': '8ad64a2348beefc83b55',
     'secret': '2f7fc4202d91f115935f',
@@ -194,3 +190,4 @@ UPLOADCARE = {
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
+django_heroku.settings(locals())
