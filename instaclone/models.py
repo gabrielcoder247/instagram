@@ -74,6 +74,7 @@ class Image(models.Model):
     image_comments = models.CharField(max_length=500)
     pub_date = models.DateField(auto_now_add=True)
     image_path = models.ImageField(upload_to = 'images/')
+    image_likes = models.ManyToManyField(User, related_name='image_likes', blank=True)
     profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
   
 

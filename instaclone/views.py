@@ -152,32 +152,14 @@ def otherprofile(request,others_user):
 	return render(request,'profile_other.html',{"followers":followers,"other_users":other_users,"following":following,"image_count":image_count,"images":images})
 
 
-# @login_required(login_url='/accounts/login')
-# def comment(request,id):
-#     upload = Image.objects.get(id=id)
-#     if request.method == 'POST':
-#         comm=CommentForm(request.POST)
-#         if comm.is_valid():
-#             comment=comm.save(commit=False)
-#             comment.user = request.user
-#             comment.post=upload
-#             comment.save()
-#             return redirect('home')
-#     return redirect('home')
-
-# @login_required(login_url='/accounts/login')
-# def comment(request, image_id):
-#     current_user = request.user
-#     current_image = Image.objects.get(id=image_id)
-
-#     if request.method == 'POST':
-#         form = CommentForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             comment_form = form.save(commit=False)
-#             comment_form.user = current_user
-#             comment_form.image = current_image
-#             comment_form.save()
-#         return redirect('home')
-#     else:
-#         form = CommentForm()
-#     return render(request, 'comment.html', {"form": form, "current_image": current_image})
+@login_required(login_url='/accounts/login')
+def likes(request, image_id):
+    post = Image.objects.get(id=image_id)
+    is_liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+    else:
+        post.likes.add(request.user)
+        is_liked = True
+    return redirect(detail, post.id)

@@ -14,7 +14,7 @@ urlpatterns =[
     url(r'^$',views.home,name='home_page'),
     url(r'^follow/(\d+)', views.follow, name="follow"),
     url(r'^image/(\d+)',views.image,name ='image'),
-    url(r'^likes/(\d+)', views.home, name='likes'),
+    url(r'^likes/(\d+)', views.likes, name='likes'),
     # url(r'^comment/(\d+)', views.image, name='comment'),
     
     
