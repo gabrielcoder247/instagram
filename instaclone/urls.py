@@ -15,6 +15,7 @@ urlpatterns =[
     url(r'^follow/(\d+)', views.follow, name="follow"),
     url(r'^image/(\d+)',views.image,name ='image'),
     url(r'^likes/(\d+)', views.likes, name='likes'),
+    url(r'^signup/$', core_views.signup, name='signup'),
     # url(r'^comment/(\d+)', views.image, name='comment'),
     
     
