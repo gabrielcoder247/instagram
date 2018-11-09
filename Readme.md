@@ -1,18 +1,18 @@
 
-####Instaclone247
+#### Instaclone247
 
 
 ## Instaclone247 is a web app clone of the popular instagram mobile app.
-###Created on: october, 25TH,  2018
+## Created on: october, 25TH,  2018
 
-###Author
+## Author
 By Gabriel Nwachukwu
 
-#### GITHUB Account:**https://github.com/gabrielcoder247**
+## GITHUB Account:**https://github.com/gabrielcoder247**
 
 ## Description
 Users can post pictures and other user like them, follow them
-#features
+# features
 likes
 follow
 expand to view details
@@ -21,7 +21,7 @@ post pictures
 
 
 
-###User Stories
+## User Stories
 As a user I would like:
 
 to Sign in with the application to start using.
@@ -36,42 +36,42 @@ Get the specs [here](https://github.com/gabrielcoder247/pitch-v2.0/blob/master/S
 
 ## Set-up and Installation
 
-### Prerequiites
+## Prerequiites
     - Python 3.6
     - Ubuntu software
 
-### Clone the Repo
+## Clone the Repo
 Run the following command on the terminal:
 `git clone https://github.com/gabrielcoder247/pitch-v2.0 && cd PitchIt on your machine terminal`
 
 Install [Postgres](https://www.postgresql.org/download/)
 
-### Create a Virtual Environment
+## Create a Virtual Environment
 Run the following commands in the same terminal:
 `sudo apt-get install python3.6-venv`
 `python3.6 -m venv virtual`
 `source virtual/bin/activate, to activate the virtual environment`
 
-### Install dependancies
+## Install dependancies
 Install dependancies that will create an environment for the app to run
 `pip3 install -r requirements`
 
 
-### Run Database Migrations
+## Run Database Migrations
 ```
 python manage.py db makemigrations <app name>
 python manage.py db migrate 
 
 ```
 
-### Running the app in development
+## Running the app in development
 In the same terminal type:
 `python3 manage.py runserver`
 
 Open the browser on `http://localhost:8000/`
 
 
-#### Dependancy Installments
+## Dependancy Installments
 
 pip3 install python3.6
 pip3 install django==1.11 django-heroku gunicorn pillow whitenoise python-decouple psycopg2-binary django-bootstrap3
@@ -95,7 +95,7 @@ N/B The finished product yet read ...more features and functionalities are still
 Contact me on gabrielcoder@gmail.com for any comments, reviews or advice.
 
 
-### MIT License
+## MIT License
 
 Copyright (c) 2018 Dev Gabriel Nwachukwu
 
