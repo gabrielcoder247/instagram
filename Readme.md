@@ -42,7 +42,7 @@ Get the specs [here](https://github.com/gabrielcoder247/pitch-v2.0/blob/master/S
 
 ## Clone the Repo
 Run the following command on the terminal:
-`git clone https://github.com/gabrielcoder247/pitch-v2.0 && cd PitchIt on your machine terminal`
+`git clone https://github.com/gabrielcoder247/instagram && cd PitchIt on your machine terminal`
 
 Install [Postgres](https://www.postgresql.org/download/)
 
