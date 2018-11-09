@@ -42,7 +42,7 @@ def signup(request):
 @login_required(login_url='/accounts/login/')
 def profile(request, profile_id):
 	
-	current_profile = Profile.objects.get(id=request.user.id)
+	current_profile = Profile.objects.get(id=profile_id)
 	images= Image.objects.filter(profile=current_profile)
 	follows=Profile.objects.get(id=request.user.id)
 	is_follow =False
