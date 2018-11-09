@@ -1,7 +1,14 @@
 
-## Intaclone is a web app clone of the popular instagram mobile app.
-### october, 25TH,  2018
-#### By **[GABRIEL NWACHUKWU](https://github.com/gabrielcoder247)**
+####Instaclone247
+
+
+## Instaclone247 is a web app clone of the popular instagram mobile app.
+###Created on: october, 25TH,  2018
+
+###Author
+By Gabriel Nwachukwu
+
+#### GITHUB Account:**https://github.com/gabrielcoder247**
 
 ## Description
 Users can post pictures and other user like them, follow them
@@ -10,6 +17,19 @@ likes
 follow
 expand to view details
 post pictures
+
+
+
+
+###User Stories
+As a user I would like:
+
+to Sign in with the application to start using.
+to Set up a profile about me and a general location and my neighborhood name
+to find a list of different businesses in my neighborhood.
+to create Posts that will be visible to everyone in my neighborhood.
+to change My neighborhood when I decide to move out
+to view details of a single neighborhood.
 
 ## Specifications
 Get the specs [here](https://github.com/gabrielcoder247/pitch-v2.0/blob/master/SPECS.md)
@@ -36,30 +56,35 @@ Run the following commands in the same terminal:
 Install dependancies that will create an environment for the app to run
 `pip3 install -r requirements`
 
-### Prepare environment variables
-```bash
-export DATABASE_URL='postgresql+psycopg2://username:password@localhost/pitch-V-2.0'
-export SECRET_KEY='Your secret key'
-```
 
 ### Run Database Migrations
 ```
-python manage.py db init
-python manage.py db migrate -m "initial migration"
-python manage.py db upgrade
+python manage.py db makemigrations <app name>
+python manage.py db migrate 
+
 ```
 
 ### Running the app in development
 In the same terminal type:
-`python3 manage.py server`
+`python3 manage.py runserver`
 
-Open the browser on `http://localhost:5000/`
+Open the browser on `http://localhost:8000/`
+
+
+#### Dependancy Installments
+
+pip3 install python3.6
+pip3 install django==1.11 django-heroku gunicorn pillow whitenoise python-decouple psycopg2-binary django-bootstrap3
 
 ## Known bugs
-SQLAlchemy errors, automatic sign out has a short time span
+It does not have bugs.But if any problems should occur,you can contact me on the address below
+
+N/B The finished product yet read ...more features and functionalities are still being worked on.
+
 
 ## Technologies used
     - Python 3.6
+    -Django
     - HTML
     - Bootstrap 4
     - JavaScript
