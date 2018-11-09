@@ -1,5 +1,5 @@
 
-#### Instaclone247
+# Instaclone247
 
 
 ## Instaclone247 is a web app clone of the popular instagram mobile app.
