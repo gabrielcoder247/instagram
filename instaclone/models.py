@@ -122,6 +122,7 @@ class Image(models.Model):
 class Comments(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='user')
     image=models.ForeignKey(Image, on_delete=models.CASCADE, related_name='comments')
+    profile=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='profile')
     comment=models.CharField(max_length=200,null=True)
 
 

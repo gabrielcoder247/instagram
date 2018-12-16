@@ -60,6 +60,8 @@
 
        {% for comment in comments %}
 
+       {{comment.profile.pub_date}}
+
        <!-- <h5 class="card-title" style="font-family: 'Oswald', sans-serif;"></h5> -->
 
         <p style="font-family: 'Oswald', sans-serif;">  <strong> {{image.name}}</strong> {{ comment }}</p>
